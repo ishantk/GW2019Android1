@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Admin"
+        android:id="@+id/admin"
+        app:showAsAction="ifRoom"/>
+
+    <item android:title="Sales"
+        android:id="@+id/sales"/>
+
+    <item android:title="HR"
+        android:id="@+id/hr"
+        app:showAsAction="ifRoom"/>
+
+    <item android:title="Marketing"
+        android:id="@+id/marketing"/>
+</menu>
