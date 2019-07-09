@@ -19,14 +19,29 @@ public class ActivityTwo extends AppCompatActivity {
         // Receiving Intent from ActivityOne
         Intent rcv = getIntent();
 
+        /*
         // Fetch Data from Intent
         String name = rcv.getStringExtra("keyName");
         String phone = rcv.getStringExtra("keyPhone");
         int number = rcv.getIntExtra("keyNumber", 0);
 
+        */
+
+        /*
+        Bundle rcvbundle = rcv.getBundleExtra("keyBundle");
+        String name = rcvbundle.getString("keyName");
+        String phone = rcvbundle.getString("keyPhone");
+        int age = rcvbundle.getInt("keyAge");
+
         // Set Data on UI i.e. Activity
-        eTxtName.setText(name);
+        eTxtName.setText(name+" | "+age);
         eTxtPhone.setText(phone);
+        */
+
+        /*Person person = (Person)rcv.getSerializableExtra(Util.KEY_PERSON);
+        eTxtName.setText(person.name+" | "+person.age);
+        eTxtPhone.setText(person.phone);
+        */
     }
 
     @Override
@@ -40,6 +55,19 @@ public class ActivityTwo extends AppCompatActivity {
     }
 
     public void clickHandler(View view){
-       finish();
+
+        // Fetch Data from User in ActivtyTwo
+        String name = eTxtName.getText().toString();
+        String phone = eTxtPhone.getText().toString();
+
+        // Put Data in an Empty Intent
+        Intent data = new Intent();
+
+        data.putExtra("keyName", name);
+        data.putExtra("keyPhone", phone);
+
+        setResult(201, data);
+
+        finish();
     }
 }
