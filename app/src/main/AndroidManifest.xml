@@ -10,9 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".ActivityTwo" />
-
-        <activity android:name=".ActivityOne">
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,6 +18,10 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".ActivityTwo" />
+        <activity android:name=".ActivityOne">
+
+        </activity>
         <activity android:name=".HomeActivity">
             <intent-filter>
                 <action android:name="com.auribises.gw2019android1.homeactivity" />
@@ -27,9 +29,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
-
-        </activity>
+        <activity android:name=".MainActivity"></activity>
     </application>
 
 </manifest>
