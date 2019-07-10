@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.auribises.gw2019android1">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_music"
@@ -9,7 +11,8 @@
         android:roundIcon="@drawable/ic_music"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity android:name=".NewsActivity"></activity>
+        <activity android:name=".LayoutsActivity" />
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,11 +20,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".ActivityTwo" />
-        <activity android:name=".ActivityOne">
-
-        </activity>
+        <activity android:name=".ActivityOne" />
         <activity android:name=".HomeActivity">
             <intent-filter>
                 <action android:name="com.auribises.gw2019android1.homeactivity" />
@@ -29,7 +29,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>
