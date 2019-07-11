@@ -26,7 +26,7 @@ public class SplashActivity extends AppCompatActivity {
         @Override
         public void handleMessage(@NonNull Message msg) {
             if(msg.what == 111){
-                Intent intent = new Intent(SplashActivity.this, LayoutsActivity.class);
+                Intent intent = new Intent(SplashActivity.this, StudentRegisterActivity.class);
                 startActivity(intent);
                 finish();
             }
