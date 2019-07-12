@@ -1,7 +1,10 @@
 package com.auribises.gw2019android1;
 
-public class Student {
+import java.io.Serializable;
 
+public class Student implements Serializable {
+
+    // Attributes : Property of Object
     public String name;
     public String phone;
     public String email;
