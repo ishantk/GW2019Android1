@@ -11,7 +11,8 @@
         android:roundIcon="@drawable/ic_music"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ConfirmStudentDetailsActivity"></activity>
+        <activity android:name=".NewsFragmentActivity"></activity>
+        <activity android:name=".ConfirmStudentDetailsActivity" />
         <activity android:name=".StudentRegisterActivity" />
         <activity android:name=".ClickListenerActivity" />
         <activity android:name=".NewsActivity" />
@@ -19,7 +20,6 @@
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
