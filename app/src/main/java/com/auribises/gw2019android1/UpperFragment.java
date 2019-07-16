@@ -68,7 +68,7 @@ public class UpperFragment extends Fragment implements AdapterView.OnItemClickLi
 
         String url="";
         if(pos == 0) {
-            url = "https://zeenews.india.com/";
+            url = "https://google.co.in";
         }else if(pos == 1){
             url = "https://zeenews.india.com/";
         }

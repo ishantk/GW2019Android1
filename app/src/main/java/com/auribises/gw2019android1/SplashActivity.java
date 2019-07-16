@@ -26,7 +26,7 @@ public class SplashActivity extends AppCompatActivity {
         @Override
         public void handleMessage(@NonNull Message msg) {
             if(msg.what == 111){
-                Intent intent = new Intent(SplashActivity.this, NewsFragmentActivity.class);
+                Intent intent = new Intent(SplashActivity.this, CustomListActivity.class);
                 startActivity(intent);
                 finish();
             }

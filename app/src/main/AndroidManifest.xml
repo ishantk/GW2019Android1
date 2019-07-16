@@ -3,6 +3,8 @@
     package="com.auribises.gw2019android1">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -11,7 +13,8 @@
         android:roundIcon="@drawable/ic_music"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".NewsFragmentActivity"></activity>
+        <activity android:name=".CustomListActivity"></activity>
+        <activity android:name=".NewsFragmentActivity" />
         <activity android:name=".ConfirmStudentDetailsActivity" />
         <activity android:name=".StudentRegisterActivity" />
         <activity android:name=".ClickListenerActivity" />
@@ -20,6 +23,7 @@
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
