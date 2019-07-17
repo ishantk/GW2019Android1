@@ -1,6 +1,9 @@
 package com.auribises.gw2019android1;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
@@ -14,13 +17,18 @@ import java.util.ArrayList;
 public class CustomListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     //ListView listView;
-    GridView listView;
+    //GridView listView;
+
+    RecyclerView recyclerView;
+
     ArrayList<Customer> customers;
     CustomerAdapter adapter;
+    CustomerRecyclerAdapter recyclerAdapter;
 
 
     void initViews(){
-        listView = findViewById(R.id.listView);
+        //listView = findViewById(R.id.listView);
+        recyclerView = findViewById(R.id.recylerView);
 
         Customer c1 = new Customer(R.drawable.p1, "John", "+91 99999 88888");
         Customer c2 = new Customer(R.drawable.p2, "Jennie", "+91 89999 88888");
@@ -37,9 +45,20 @@ public class CustomListActivity extends AppCompatActivity implements AdapterView
         customers.add(c5);
         customers.add(new Customer(R.drawable.p6, "Jai", "+91 89991 88888")); // 5
 
-        adapter = new CustomerAdapter(this, R.layout.list_item, customers);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(this);
+        //adapter = new CustomerAdapter(this, R.layout.list_item, customers);
+//        listView.setAdapter(adapter);
+//        listView.setOnItemClickListener(this);
+
+        recyclerAdapter = new CustomerRecyclerAdapter(this, R.layout.list_item, customers);
+
+        // Recycler View should display the data as List View
+        LinearLayoutManager layoutManager1 = new LinearLayoutManager(this);
+
+        // Recycler View should display the data as Grid View
+        GridLayoutManager layoutManager2 = new GridLayoutManager(this, 2);
+
+        recyclerView.setLayoutManager(layoutManager1);
+        recyclerView.setAdapter(recyclerAdapter);
     }
 
 
