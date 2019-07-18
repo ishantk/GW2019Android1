@@ -67,6 +67,9 @@ public class PlayMusicActivity extends AppCompatActivity implements View.OnClick
                 mediaPlayer.prepare();
                 mediaPlayer.start();
 
+                //mediaPlayer.seekTo();
+                //mediaPlayer.pause();
+
             }catch (Exception e){
                 e.printStackTrace();
             }
