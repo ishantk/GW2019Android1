@@ -26,7 +26,7 @@ public class SplashActivity extends AppCompatActivity {
         @Override
         public void handleMessage(@NonNull Message msg) {
             if(msg.what == 111){
-                Intent intent = new Intent(SplashActivity.this, CustomListActivity.class);
+                Intent intent = new Intent(SplashActivity.this, AllMusicActivity.class);
                 startActivity(intent);
                 finish();
             }
