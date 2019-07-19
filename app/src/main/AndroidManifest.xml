@@ -14,7 +14,8 @@
         android:roundIcon="@drawable/ic_music"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PlayMusicActivity"></activity>
+        <activity android:name=".PersistenceActivity"></activity>
+        <activity android:name=".PlayMusicActivity" />
         <activity android:name=".AllMusicActivity" />
         <activity android:name=".VoiceRecognitionActivity" />
         <activity android:name=".CustomListActivity" />
