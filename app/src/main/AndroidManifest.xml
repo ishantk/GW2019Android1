@@ -14,7 +14,19 @@
         android:roundIcon="@drawable/ic_music"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PersistenceActivity"></activity>
+        <activity android:name=".viewcontroller.BooksActivity"></activity>
+        <activity
+            android:name=".MyTabbedActivity"
+            android:label="@string/title_activity_my_tabbed"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MyBottomNavigationActivity"
+            android:label="@string/title_activity_my_bottom_navigation" />
+        <activity
+            android:name=".MyNavigationActivity"
+            android:label="@string/title_activity_my_navigation"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".PersistenceActivity" />
         <activity android:name=".PlayMusicActivity" />
         <activity android:name=".AllMusicActivity" />
         <activity android:name=".VoiceRecognitionActivity" />
