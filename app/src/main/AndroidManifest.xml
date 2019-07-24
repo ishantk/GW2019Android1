@@ -14,7 +14,8 @@
         android:roundIcon="@drawable/ic_music"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".viewcontroller.BooksActivity"></activity>
+        <activity android:name=".viewcontroller.TechCrunchNewsActivity"></activity>
+        <activity android:name=".viewcontroller.BooksActivity" />
         <activity
             android:name=".MyTabbedActivity"
             android:label="@string/title_activity_my_tabbed"
