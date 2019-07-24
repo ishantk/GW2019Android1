@@ -4,6 +4,7 @@ public class TechCrunchNews {
 
     public String author;
     public String title;
+    public String url;
     public String urlToImage;
     public String publishedAt;
 
@@ -11,9 +12,10 @@ public class TechCrunchNews {
 
     }
 
-    public TechCrunchNews(String author, String title, String urlToImage, String publishedAt) {
+    public TechCrunchNews(String author, String title, String url, String urlToImage, String publishedAt) {
         this.author = author;
         this.title = title;
+        this.url = url;
         this.urlToImage = urlToImage;
         this.publishedAt = publishedAt;
     }
@@ -23,6 +25,7 @@ public class TechCrunchNews {
         return "TechCrunchNews{" +
                 "author='" + author + '\'' +
                 ", title='" + title + '\'' +
+                ", url='" + url + '\'' +
                 ", urlToImage='" + urlToImage + '\'' +
                 ", publishedAt='" + publishedAt + '\'' +
                 '}';

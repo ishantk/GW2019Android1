@@ -2,12 +2,18 @@ package com.auribises.gw2019android1.viewcontroller;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.auribises.gw2019android1.R;
+import com.auribises.gw2019android1.adapter.NewsAdapter;
 import com.auribises.gw2019android1.model.TechCrunchNews;
 
 import org.json.JSONArray;
@@ -20,20 +26,44 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 
-public class TechCrunchNewsActivity extends AppCompatActivity {
+public class TechCrunchNewsActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     StringBuilder builder;
     FetchNewsTask task;
 
     ArrayList<TechCrunchNews> newsList;
+    NewsAdapter adapter;
+
+    ListView listView;
+
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tech_crunch_news);
 
+        getSupportActionBar().setTitle("News");
+
+        listView = findViewById(R.id.listView);
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Please Wait...");
+
         task = new FetchNewsTask();
         task.execute();
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+        TechCrunchNews news = newsList.get(i);
+        Intent intent = new Intent(TechCrunchNewsActivity.this, DetailedNewsActivity.class);
+        intent.putExtra("keyUrl", news.url);
+        startActivity(intent);
+
+
     }
 
     // 1. Fetch JSON data from Web Service
@@ -45,7 +75,9 @@ public class TechCrunchNewsActivity extends AppCompatActivity {
 
             try{
 
-                URL url = new URL("https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=31c21508fad64116acd229c10ac11e84");
+
+                //URL url = new URL("https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=31c21508fad64116acd229c10ac11e84");
+                URL url = new URL("https://newsapi.org/v2/top-headlines?country=in&apiKey=31c21508fad64116acd229c10ac11e84");
 
                 URLConnection connection = url.openConnection();
 
@@ -71,8 +103,13 @@ public class TechCrunchNewsActivity extends AppCompatActivity {
         }
 
         @Override
+        protected void onPreExecute() {
+            progressDialog.show();
+        }
+
+        @Override
         protected void onPostExecute(Object o) {
-            Toast.makeText(getApplicationContext(), "Response:"+builder.toString(), Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), "Response:"+builder.toString(), Toast.LENGTH_LONG).show();
             Log.i("TechCrunchNewsActivity", builder.toString());
 
             parseJSONResponse();
@@ -103,6 +140,7 @@ public class TechCrunchNewsActivity extends AppCompatActivity {
 
                 news.author = obj.getString("author");
                 news.title = obj.getString("title");
+                news.url = obj.getString("url");
                 news.urlToImage = obj.getString("urlToImage");
                 news.publishedAt = obj.getString("publishedAt");
 
@@ -111,6 +149,10 @@ public class TechCrunchNewsActivity extends AppCompatActivity {
                 Log.i("TechCrunchNewsActivity", news.toString());
             }
 
+            adapter = new NewsAdapter(TechCrunchNewsActivity.this, R.layout.news_list_item, newsList);
+            listView.setAdapter(adapter);
+            listView.setOnItemClickListener(TechCrunchNewsActivity.this);
+            progressDialog.dismiss();
         }catch (Exception e){
             e.printStackTrace();
         }
