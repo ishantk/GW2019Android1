@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
+import com.auribises.gw2019android1.viewcontroller.AddCustomerActivity;
 import com.auribises.gw2019android1.viewcontroller.BooksActivity;
 import com.auribises.gw2019android1.viewcontroller.TechCrunchNewsActivity;
 
@@ -29,7 +30,7 @@ public class SplashActivity extends AppCompatActivity {
         @Override
         public void handleMessage(@NonNull Message msg) {
             if(msg.what == 111){
-                Intent intent = new Intent(SplashActivity.this, TechCrunchNewsActivity.class);
+                Intent intent = new Intent(SplashActivity.this, AddCustomerActivity.class);
                 startActivity(intent);
                 finish();
             }

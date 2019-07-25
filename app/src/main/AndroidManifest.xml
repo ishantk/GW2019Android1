@@ -14,7 +14,14 @@
         android:roundIcon="@drawable/ic_music"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".viewcontroller.DetailedNewsActivity"></activity>
+        <provider
+            android:name=".MyContentProvider"
+            android:authorities="com.auribises.gw2019android1.mycp"
+            android:enabled="true"
+            android:exported="true"></provider>
+
+        <activity android:name=".viewcontroller.AddCustomerActivity" />
+        <activity android:name=".viewcontroller.DetailedNewsActivity" />
         <activity android:name=".viewcontroller.TechCrunchNewsActivity" />
         <activity android:name=".viewcontroller.BooksActivity" />
         <activity
