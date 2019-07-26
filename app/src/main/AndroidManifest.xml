@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.SEND_SMS"/>
 
     <application
         android:allowBackup="true"
@@ -14,11 +16,13 @@
         android:roundIcon="@drawable/ic_music"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".viewcontroller.AllCustomersActivity"></activity>
+
         <provider
             android:name=".MyContentProvider"
             android:authorities="com.auribises.gw2019android1.mycp"
             android:enabled="true"
-            android:exported="true"></provider>
+            android:exported="true" />
 
         <activity android:name=".viewcontroller.AddCustomerActivity" />
         <activity android:name=".viewcontroller.DetailedNewsActivity" />
