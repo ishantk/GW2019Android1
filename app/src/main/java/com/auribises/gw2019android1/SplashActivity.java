@@ -9,9 +9,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.widget.Space;
 
 
 import com.auribises.gw2019android1.viewcontroller.AddCustomerActivity;
+import com.auribises.gw2019android1.viewcontroller.TechCrunchNewsActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -24,7 +26,6 @@ public class SplashActivity extends AppCompatActivity {
 
         handler.sendEmptyMessageDelayed(111, 2500);
 
-
     }
 
     Handler handler = new Handler(){
@@ -32,7 +33,7 @@ public class SplashActivity extends AppCompatActivity {
         @Override
         public void handleMessage(@NonNull Message msg) {
             if(msg.what == 111){
-                Intent intent = new Intent(SplashActivity.this, LudhianaMapsActivity.class);
+                Intent intent = new Intent(SplashActivity.this, RegisterUserActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -43,3 +44,6 @@ public class SplashActivity extends AppCompatActivity {
 
 // For Google Libraries :)
 // https://developers.google.com/android/guides/setup
+
+// For Google Firebase Documentation
+// https://firebase.google.com/docs/auth/

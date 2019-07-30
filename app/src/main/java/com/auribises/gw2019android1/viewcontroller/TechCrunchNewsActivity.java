@@ -1,9 +1,13 @@
 package com.auribises.gw2019android1.viewcontroller;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,7 +16,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.auribises.gw2019android1.MyNewsService;
 import com.auribises.gw2019android1.R;
+import com.auribises.gw2019android1.SplashActivity;
 import com.auribises.gw2019android1.adapter.NewsAdapter;
 import com.auribises.gw2019android1.model.TechCrunchNews;
 
@@ -38,6 +44,8 @@ public class TechCrunchNewsActivity extends AppCompatActivity implements Adapter
 
     ProgressDialog progressDialog;
 
+    MyReceiver myReceiver; // Reference Variable of BroadcastReceiver
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,8 +59,39 @@ public class TechCrunchNewsActivity extends AppCompatActivity implements Adapter
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Please Wait...");
 
-        task = new FetchNewsTask();
-        task.execute();
+//        task = new FetchNewsTask();
+//        task.execute();
+
+        myReceiver = new MyReceiver();
+
+        // Events | User Defined Events | List of Events
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("a.b.c.d");
+        filter.addAction("kuch.bhi.ho.sakta.hai");
+        filter.addAction("com.auribises.gw2019android1.newsresponse");
+
+
+        // Events | Built In Events | List of Events
+        IntentFilter filter1 = new IntentFilter();
+        filter1.addAction(Intent.ACTION_BATTERY_LOW);
+        filter1.addAction(Intent.ACTION_PACKAGE_ADDED);
+        filter1.addAction(Intent.ACTION_PACKAGE_REMOVED);
+        filter1.addAction(Intent.ACTION_SCREEN_ON);
+        filter1.addAction(Intent.ACTION_SCREEN_OFF);
+
+        // Below is for Built In
+        //registerReceiver(myReceiver, filter1);
+
+        // Below is for User Defined with LocalBroadcastManager API
+        LocalBroadcastManager.getInstance(this).registerReceiver(myReceiver, filter);
+
+        Intent intent = new Intent(TechCrunchNewsActivity.this, MyNewsService.class);
+        // Forward Passing
+        intent.putExtra("keyUrl", "https://newsapi.org/v2/top-headlines?country=in&apiKey=31c21508fad64116acd229c10ac11e84");
+        startService(intent); // Execute the Code in the Background !!
+
+
+
     }
 
     @Override
@@ -65,6 +104,35 @@ public class TechCrunchNewsActivity extends AppCompatActivity implements Adapter
 
 
     }
+
+    class MyReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            if(intent.getAction().equals("com.auribises.gw2019android1.newsresponse")) {
+
+                String response = intent.getStringExtra("keyResponse");
+                Log.i("TechCrunchNewsActivity", "==onReceive==" + response);
+
+                builder = new StringBuilder();
+                builder.append(response);
+                parseJSONResponse();
+            }
+
+
+
+            if(intent.getAction().equals(Intent.ACTION_SCREEN_ON)){
+
+            }
+
+            if(intent.getAction().equals(Intent.ACTION_PACKAGE_ADDED)){
+
+            }
+
+        }
+    }
+
 
     // 1. Fetch JSON data from Web Service
     // Nested Class

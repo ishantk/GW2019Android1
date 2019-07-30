@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "810837589525",
+    "firebase_url": "https://nimble-perigee-501.firebaseio.com",
+    "project_id": "nimble-perigee-501",
+    "storage_bucket": "nimble-perigee-501.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:810837589525:android:632265fbbaac6577",
+        "android_client_info": {
+          "package_name": "com.auribises.gw2019android1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "810837589525-hk4psade2fr5dngboahsf97dch0j66ns.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCef5zCsnzvMKvFlUPIzUDD9mSESww4jpo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "810837589525-hk4psade2fr5dngboahsf97dch0j66ns.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
