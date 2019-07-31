@@ -1,5 +1,6 @@
 package com.auribises.gw2019android1.viewcontroller;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,6 +23,13 @@ import com.auribises.gw2019android1.R;
 import com.auribises.gw2019android1.Util;
 import com.auribises.gw2019android1.adapter.CustomerAdapter;
 import com.auribises.gw2019android1.model.Customer;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -43,7 +51,8 @@ public class AllCustomersActivity extends AppCompatActivity implements AdapterVi
 
         resolver = getContentResolver(); // To Access ContentProvider
 
-        fetchCustomersFromDB();
+        //fetchCustomersFromDB();
+        fetchCustomersFromFirebase();
     }
 
     @Override
@@ -52,6 +61,52 @@ public class AllCustomersActivity extends AppCompatActivity implements AdapterVi
         setContentView(R.layout.activity_all_customers); // ListView
         initViews();
     }
+
+    void fetchCustomersFromFirebase(){
+
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        String uid = firebaseUser.getUid();
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        customers = new ArrayList<>();
+
+        db.collection("users")
+                .document(uid)
+                .collection("customers")
+                .get()
+                .addOnCompleteListener(this, new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                        QuerySnapshot snapshots = task.getResult();
+                        for(DocumentSnapshot document : snapshots.getDocuments()){
+                            Customer cRef = document.toObject(Customer.class);
+                            cRef.id = document.getId(); // ID of Customer
+                            customers.add(cRef);
+
+                        }
+
+                        adapter = new CustomerAdapter(AllCustomersActivity.this, R.layout.list_item, customers);
+                        listView.setAdapter(adapter);
+                        listView.setOnItemClickListener(AllCustomersActivity.this);
+
+                    }
+                });
+
+                //db.collection("users").document(uid).delete()
+                //db.collection("users").document(uid).set(user)
+
+                /*
+                db.collection("users")
+                        .document(uid)
+                        .collection("customers")
+                        .document(customer.id)
+                        .delete()
+                */
+
+    }
+
 
     void fetchCustomersFromDB() {
 
@@ -66,7 +121,7 @@ public class AllCustomersActivity extends AppCompatActivity implements AdapterVi
             while (cursor.moveToNext()) { // Iterate in Fetched Data Row by Row
 
                 Customer customer = new Customer();
-                customer.id = cursor.getInt(0);
+                //customer.id = cursor.getInt(0);
                 customer.name = cursor.getString(1);
                 customer.phone = cursor.getString(2);
                 customer.email = cursor.getString(3);

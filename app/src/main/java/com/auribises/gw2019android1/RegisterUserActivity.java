@@ -12,11 +12,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.auribises.gw2019android1.viewcontroller.AddCustomerActivity;
 import com.auribises.gw2019android1.viewcontroller.TechCrunchNewsActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class RegisterUserActivity extends AppCompatActivity {
 
@@ -51,9 +54,10 @@ public class RegisterUserActivity extends AppCompatActivity {
 
                 Toast.makeText(RegisterUserActivity.this, user.toString(), Toast.LENGTH_SHORT).show();
 
-                //registerUserInFirebase();
                 progressDialog.show();
-                loginUserFromFirebase();
+                registerUserInFirebase();
+
+                //loginUserFromFirebase();
             }
         });
 
@@ -83,7 +87,35 @@ public class RegisterUserActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isComplete()){
-                            Intent intent = new Intent(RegisterUserActivity.this, TechCrunchNewsActivity.class);
+
+
+                            //Intent intent = new Intent(RegisterUserActivity.this, TechCrunchNewsActivity.class);
+                            //startActivity(intent);
+                            //finish();
+
+                            saveUserInFirebase();
+
+                        }else{
+                            Toast.makeText(RegisterUserActivity.this, "Something Went Wrong !!", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+
+    }
+
+    void saveUserInFirebase(){
+
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        String uid = firebaseUser.getUid(); // This is uid of User which we have just created
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users").document(uid).set(user)
+                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isComplete()){
+                            progressDialog.dismiss();
+                            Intent intent = new Intent(RegisterUserActivity.this, AddCustomerActivity.class);
                             startActivity(intent);
                             finish();
                         }else{
@@ -91,6 +123,7 @@ public class RegisterUserActivity extends AppCompatActivity {
                         }
                     }
                 });
+
 
     }
 

@@ -3,6 +3,7 @@ package com.auribises.gw2019android1.viewcontroller;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -16,7 +17,15 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.auribises.gw2019android1.R;
+import com.auribises.gw2019android1.RegisterUserActivity;
+import com.auribises.gw2019android1.SplashActivity;
 import com.auribises.gw2019android1.model.Customer;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 /*
 Ishants-Macbook-Air:~ ishantkumar$ cd Library/Android/
@@ -52,12 +61,18 @@ public class AddCustomerActivity extends AppCompatActivity implements View.OnCli
 
     boolean updateMode;
 
+    ProgressDialog progressDialog;
+
     void initViews(){
         eTxtName = findViewById(R.id.editTextName);
         eTxtPhone = findViewById(R.id.editTextPhone);
         eTxtEmail = findViewById(R.id.editTextEmail);
         btnAdd = findViewById(R.id.buttonAdd);
         btnAdd.setOnClickListener(this);
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Please Wait..");
+        progressDialog.setCancelable(false);
 
         customer = new Customer();
         resolver = getContentResolver();
@@ -90,6 +105,7 @@ public class AddCustomerActivity extends AppCompatActivity implements View.OnCli
             customer.phone = eTxtPhone.getText().toString();
             customer.email = eTxtEmail.getText().toString();
 
+            /*
             //Toast.makeText(this, customer.toString(), Toast.LENGTH_LONG).show();
 
             String tabName = "Customer";
@@ -122,8 +138,40 @@ public class AddCustomerActivity extends AppCompatActivity implements View.OnCli
                 }
 
             }
+            */
+
+            progressDialog.show();
+            addCustomerInFirebase();
 
         }
+    }
+
+    void addCustomerInFirebase(){
+
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        String uid = firebaseUser.getUid();
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("users")
+                .document(uid)
+                .collection("customers")
+                .add(customer)
+                .addOnCompleteListener(this, new OnCompleteListener<DocumentReference>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentReference> task) {
+                        if(task.isComplete()){
+                            Toast.makeText(AddCustomerActivity.this, customer.name + " Added in DataBase", Toast.LENGTH_LONG).show();
+
+                            eTxtName.setText("");
+                            eTxtPhone.setText("");
+                            eTxtEmail.setText("");
+                            progressDialog.dismiss();
+                        }
+                    }
+                });
+
+
     }
 
     @Override
@@ -131,7 +179,10 @@ public class AddCustomerActivity extends AppCompatActivity implements View.OnCli
 
         if(!updateMode) {
             menu.add(1, 101, 1, "Customers").setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+
         }
+
+        menu.add(1, 201, 1, "LogOut").setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -144,6 +195,17 @@ public class AddCustomerActivity extends AppCompatActivity implements View.OnCli
 
             Intent intent = new Intent(AddCustomerActivity.this, AllCustomersActivity.class);
             startActivity(intent);
+
+        }
+
+        if(item.getItemId() == 201){
+
+            FirebaseAuth auth = FirebaseAuth.getInstance();
+            auth.signOut();
+
+            Intent intent = new Intent(AddCustomerActivity.this, SplashActivity.class);
+            startActivity(intent);
+            finish();
 
         }
 
