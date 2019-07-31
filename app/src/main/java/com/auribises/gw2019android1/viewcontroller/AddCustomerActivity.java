@@ -2,12 +2,18 @@ package com.auribises.gw2019android1.viewcontroller;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -167,6 +173,7 @@ public class AddCustomerActivity extends AppCompatActivity implements View.OnCli
                             eTxtPhone.setText("");
                             eTxtEmail.setText("");
                             progressDialog.dismiss();
+                            showNotification();
                         }
                     }
                 });
@@ -211,4 +218,32 @@ public class AddCustomerActivity extends AppCompatActivity implements View.OnCli
 
         return super.onOptionsItemSelected(item);
     }
+
+    void showNotification(){
+
+        // To show the Notification
+        NotificationManager notificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // Associate a NotificationChannel to NotificationManager
+            NotificationChannel notificationChannel = new NotificationChannel("myId", "myChannel", NotificationManager.IMPORTANCE_HIGH);
+            notificationManager.createNotificationChannel(notificationChannel);
+        }
+
+        Intent intent = new Intent(AddCustomerActivity.this, TechCrunchNewsActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 111, intent, 0);
+
+        // Create Notification
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "myId");
+        builder.setContentTitle("This is Title");
+        builder.setContentText("Customer Added "+customer.name);
+        builder.setContentIntent(pendingIntent);
+        builder.setSmallIcon(R.drawable.ic_menu_send);
+
+        Notification notification = builder.build();
+
+        notificationManager.notify(101, notification);
+
+    }
+
 }

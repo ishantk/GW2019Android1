@@ -47,7 +47,7 @@ public class SplashActivity extends AppCompatActivity {
         @Override
         public void handleMessage(@NonNull Message msg) {
             if(msg.what == 111){
-                Intent intent = new Intent(SplashActivity.this, AddCustomerActivity.class);
+                Intent intent = new Intent(SplashActivity.this, MyKotlinActivity.class);
                 startActivity(intent);
                 finish();
             }else{
